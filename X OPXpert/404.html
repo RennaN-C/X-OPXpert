@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 | Página não encontrada</title>
+  <style>
+    :root {
+      --bg: #0e0f13;
+      --card: #171923;
+      --text: #e9eaf0;
+      --muted: #a3a6b3;
+      --accent: #6ea8fe;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(520px, 92vw);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,.35);
+    }
+
+    .code {
+      font-size: clamp(48px, 10vw, 96px);
+      font-weight: 800;
+      letter-spacing: 2px;
+      line-height: .9;
+      margin: 4px 0 10px;
+    }
+
+    .subtitle {
+      margin: 0 0 12px;
+      font-size: clamp(16px, 2.6vw, 18px);
+      color: var(--muted);
+    }
+
+    .emoji {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      grid-template-columns: 1fr;
+    }
+
+    a.button {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--accent);
+      color: #0b0c10;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .link-minimal {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .link-minimal:hover { text-decoration: underline; }
+
+    a.button:focus { outline: 2px solid #fff; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="t404">
+    <div class="emoji" aria-hidden="true">🧭</div>
+    <h1 id="t404" class="code">404</h1>
+    <p class="subtitle">Ops! A página que você procura não foi encontrada.</p>
+
+    <div class="actions">
+      <a class="button" href="/">Voltar para a página inicial</a>
+      <a class="link-minimal" href="javascript:history.back()">Retornar à página anterior</a>
+    </div>
+  </main>
+</body>
+</html>
