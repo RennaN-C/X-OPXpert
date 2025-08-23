@@ -1,17 +1,24 @@
 {
-  "name": "pasta1",
+  "name": "x-opxpert",
   "version": "1.0.0",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "models:auto": "npx sequelize-auto -o ./models -d \"X OPXpert\" -h localhost -u postgres -x xopxpert -p 5430 -e postgres --schema public"
   },
-  "dependencies": {
-    "express": "^5.1.0"
-  },
-  "devDependencies": {},
   "keywords": [],
-  "description": ""
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "sequelize-auto": "^0.8.8"
+  }
 }
