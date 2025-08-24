@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
@@ -7,11 +6,11 @@
     <title>X OPXpert - Login</title>
 
     <link href="/css/login.css" rel="stylesheet" />
+    <!-- Carrega o script externo -->
     <script defer src="/js/login.js"></script>
   </head>
   <body>
     <div class="login-container">
-      <!-- Lado esquerdo -->
       <div class="login-form">
         <h2>Faça seu login!</h2>
         <label for="usuario">Usuário:</label>
@@ -19,14 +18,12 @@
         <label for="senha">Senha:</label>
         <input id="senha" placeholder="Senha" type="password" />
         <a href="#">Esqueci minha senha</a>
-        <button class="btn-login" onclick="window.location.href='/inicio'">
-          Login
-        </button>
+        <!-- Remove o onclick, agora o JS externo captura o clique -->
+        <button class="btn-login">Login</button>
         <a class="btn-cadastro" href="/cadastro"
           >Precisa de acesso? Solicitar credenciais</a
         >
       </div>
-      <!-- Lado direito -->
       <div class="login-image"></div>
     </div>
   </body>
