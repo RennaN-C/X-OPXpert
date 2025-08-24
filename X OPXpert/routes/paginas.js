@@ -29,4 +29,8 @@ router.get("/funcoes", (req, res) => {
   res.sendFile(path.join(viewsPath, "funcoes.html"));
 });
 
+router.get("/agenda", (req, res) => {
+  res.sendFile(path.join(viewsPath, "agenda.html"));
+});
+
 module.exports = router;

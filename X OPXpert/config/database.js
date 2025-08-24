@@ -2,20 +2,19 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,    // "X OPXpert"
-  process.env.DB_USER,    // ex: "postgres"
-  process.env.DB_PASS,    // sua senha
+  process.env.DB_NAME,    
+  process.env.DB_USER,    
+  process.env.DB_PASS,    
   {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5430,
     dialect: 'postgres',
     logging: false,
     define: {
-      timestamps: false,     // não exigir createdAt/updatedAt no banco já existente
-      freezeTableName: true  // não pluralizar nomes automaticamente
+      timestamps: false,     
+      freezeTableName: true  
     }
-    // Se seu provedor exigir SSL:
-    // dialectOptions: { ssl: { require: true, rejectUnauthorized: false } }
+   
   }
 );
 

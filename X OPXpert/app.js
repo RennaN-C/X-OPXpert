@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 
 const paginasRoutes = require("./routes/paginas"); // Rotas para páginas HTML
+const agendaRoutes = require('./routes/agenda'); // Rotas para API agenda
 
 // Middleware para interpretar JSON (se precisar no futuro)
 app.use(express.json());
@@ -12,6 +13,8 @@ app.use(express.static(path.join(__dirname, "assets")));
 
 // Rotas para servir páginas HTML
 app.use("/", paginasRoutes);
+
+app.use('/api/agenda', agendaRoutes);
 
 const PORT = process.env.APP_PORT || 3000;
 
