@@ -1,7 +1,7 @@
 # X OPXpert 🚀
 
 <p align="center">
-  <img alt="X OPXpert Logo" src="assets/img/logo.png" width="200px">
+  <img alt="X OPXpert Logo" src="X-OPXpert/assets/img/logo.png" width="200px" />
 </p>
 
 <p align="center">
@@ -18,7 +18,6 @@
   <img alt="Status Em Desenvolvimento" src="https://img.shields.io/badge/STATUS-EM%20DESENVOLVIMENTO-green" />
 </p>
 
-
 ---
 
 ## 💻 Sobre o projeto
@@ -33,16 +32,19 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
 ## ⚙️ Funcionalidades
 
 - **Gestão de Ordens de Produção**
+
   - Criar novas ordens
   - Acompanhar status (Em andamento, Concluída, Pendente)
   - Definir prioridades
 
 - **Controle de Materiais**
+
   - Registrar entradas e saídas de materiais
   - Monitorar estoque
   - Alertas de reposição
 
 - **Gestão de Equipes**
+
   - Atribuir funcionários a ordens de produção
   - Monitorar produtividade
   - Registrar histórico de operações
@@ -53,7 +55,6 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
   - Exportar dados para Excel/PDF
 
 ---
-
 
 ### Web
 
@@ -73,10 +74,9 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
 
 ## 🛠 Tecnologias
 
-- **Frontend**: HTML, CSS, JavaScript  
-- **Backend**: Node.js, Express, Sequelize, Postgres, dotenv  
-- **Utilitários**: VS CODE, Insomnia (teste de API), bcrypt, express-session, nodemon, sequelize-auto, 
-
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Node.js, Express, Sequelize, Postgres, dotenv
+- **Utilitários**: VS CODE, Insomnia (teste de API), bcrypt, express-session, nodemon, sequelize-auto,
 
 ---
 
@@ -84,19 +84,19 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
 
 ### Dependências de produção
 
-- bcrypt ^6.0.0  
-- bcryptjs ^3.0.2  
-- dotenv ^17.2.1  
-- express ^5.1.0  
-- express-session ^1.18.2  
-- pg ^8.16.3  
-- pg-hstore ^2.3.4  
-- sequelize ^6.37.7  
+- bcrypt ^6.0.0
+- bcryptjs ^3.0.2
+- dotenv ^17.2.1
+- express ^5.1.0
+- express-session ^1.18.2
+- pg ^8.16.3
+- pg-hstore ^2.3.4
+- sequelize ^6.37.7
 
 ### Dependências de desenvolvimento
 
-- nodemon ^3.1.10  
-- sequelize-auto ^0.8.8  
+- nodemon ^3.1.10
+- sequelize-auto ^0.8.8
 
 ---
 
@@ -104,9 +104,9 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
 
 ### Pré-requisitos
 
-- Git  
-- Node.js  
-- VSCode ou outro editor de código  
+- Git
+- Node.js
+- VSCode ou outro editor de código
 
 ### Rodando o Backend
 
@@ -116,3 +116,4 @@ cd X-OPXpert/X OPXpert
 npm install
 npm run dev
 # Servidor rodando em http://localhost:8080
+```
