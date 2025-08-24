@@ -1,15 +1,23 @@
 # X OPXpert 🚀
 
 <p align="center">
-  <img alt="X OPXpert Logo" src="assets/logo.png" width="200px">
+  <img alt="X OPXpert Logo" src="assets/img/logo.png" width="200px">
 </p>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/SeuUsuario/X-OPXpert?color=%2304D361">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/SeuUsuario/X-OPXpert">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/SeuUsuario/X-OPXpert">
-  <img alt="Status Em Desenvolvimento" src="https://img.shields.io/badge/STATUS-EM%20DESENVOLVIMENTO-green">
+  <!-- Linguagens usadas no projeto -->
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/RennaN-C/X-OPXpert?color=%2304D361" />
+  
+  <!-- Tamanho do repositório -->
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/RennaN-C/X-OPXpert" />
+  
+  <!-- Data do último commit -->
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/RennaN-C/X-OPXpert" />
+  
+  <!-- Status do projeto -->
+  <img alt="Status Em Desenvolvimento" src="https://img.shields.io/badge/STATUS-EM%20DESENVOLVIMENTO-green" />
 </p>
+
 
 ---
 
@@ -46,13 +54,6 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
 
 ---
 
-## 🎨 Layout
-
-O layout do sistema está disponível no Figma:
-
-<a href="https://www.figma.com/">
-  <img alt="Acessar Layout Figma" src="https://img.shields.io/badge/Acessar%20Layout-Figma-%2304D361">
-</a>
 
 ### Web
 
@@ -72,10 +73,32 @@ O layout do sistema está disponível no Figma:
 
 ## 🛠 Tecnologias
 
-- **Frontend**: React, TypeScript, React Icons, Axios  
-- **Backend**: Node.js, TypeScript, Express, KnexJS, SQLite, CORS, dotenv  
-- **Mobile**: Flutter, TypeScript  
-- **Utilitários**: Figma (layout), Insomnia (teste de API), VSCode  
+## 🛠 Tecnologias
+
+- **Frontend**: HTML, CSS, JavaScript  
+- **Backend**: Node.js, Express, Sequelize, Postgres, dotenv  
+- **Utilitários**: VS CODE, Insomnia (teste de API), bcrypt, express-session, nodemon, sequelize-auto, 
+
+
+---
+
+## 📦 Dependências do Backend
+
+### Dependências de produção
+
+- bcrypt ^6.0.0  
+- bcryptjs ^3.0.2  
+- dotenv ^17.2.1  
+- express ^5.1.0  
+- express-session ^1.18.2  
+- pg ^8.16.3  
+- pg-hstore ^2.3.4  
+- sequelize ^6.37.7  
+
+### Dependências de desenvolvimento
+
+- nodemon ^3.1.10  
+- sequelize-auto ^0.8.8  
 
 ---
 
@@ -83,15 +106,15 @@ O layout do sistema está disponível no Figma:
 
 ### Pré-requisitos
 
-- Git
-- Node.js
-- VSCode ou outro editor de código
+- Git  
+- Node.js  
+- VSCode ou outro editor de código  
 
 ### Rodando o Backend
 
 ```bash
-git clone https://github.com/SeuUsuario/X-OPXpert.git
-cd X-OPXpert/server
+git clone https://github.com/RennaN-C/X-OPXpert
+cd X-OPXpert/X OPXpert
 npm install
-npm run dev:server
+npm run dev
 # Servidor rodando em http://localhost:8080
