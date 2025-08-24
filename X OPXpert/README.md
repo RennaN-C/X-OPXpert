@@ -73,8 +73,6 @@ O sistema foi desenvolvido para fornecer **visão clara e centralizada das orden
 
 ## 🛠 Tecnologias
 
-## 🛠 Tecnologias
-
 - **Frontend**: HTML, CSS, JavaScript  
 - **Backend**: Node.js, Express, Sequelize, Postgres, dotenv  
 - **Utilitários**: VS CODE, Insomnia (teste de API), bcrypt, express-session, nodemon, sequelize-auto, 
