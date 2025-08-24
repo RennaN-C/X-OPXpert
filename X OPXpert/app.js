@@ -2,11 +2,25 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
+const session = require("express-session");
+const logoutRoutes = require('./routes/logout');
+
+app.use(
+  session({
+    secret: "u@GF7|4aL@$Wdiv14R",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 1000 }, // 1h
+  })
+);
+
 // Rotas
-const paginasRoutes = require("./routes/paginas"); // HTML pages
-const agendaRoutes = require("./routes/agenda"); // API for agenda
-const loginRoutes = require("./routes/login"); // API for login (new)
-const cadastroRoutes = require('./routes/cadastro'); //API Cadastro
+const paginasRoutes = require("./routes/paginas"); // páginas
+const agendaRoutes = require("./routes/agenda"); // API agenda
+const loginRoutes = require("./routes/login"); // API login
+const cadastroRoutes = require("./routes/cadastro"); //API Cadastro
+const funcionariosRoutes = require("./routes/funcionarios"); // API Funcionários
+const produtosRoutes = require("./routes/produtos"); // API produtos
 
 // Banco de dados (Sequelize)
 const db = require("./models");
@@ -22,7 +36,10 @@ app.use(express.static(path.join(__dirname, "assets")));
 app.use("/", paginasRoutes); // Páginas HTML
 app.use("/api/agenda", agendaRoutes); // API agenda
 app.use("/login", loginRoutes); // Login API
-app.use('/cadastro', cadastroRoutes); // CadastroAPI
+app.use("/cadastro", cadastroRoutes); // CadastroAPI
+app.use("/api/funcionarios", funcionariosRoutes); // Rota nova de Funcionários
+app.use("/api/produtos", produtosRoutes); // Rota de produtos
+app.use('/logout', logoutRoutes);
 
 // Página 404 para rotas não encontradas
 app.use((req, res, next) => {

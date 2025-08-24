@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnLogin = document.querySelector(".btn-login");
 
   btnLogin.addEventListener("click", async (event) => {
-    event.preventDefault(); // evita o reload da página
+    event.preventDefault(); 
 
     const usuario = document.getElementById("usuario").value.trim();
     const senha = document.getElementById("senha").value.trim();
@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Login OK, redireciona para /inicio
+        
         window.location.href = "/inicio";
       } else {
-        // Erro no login, mostra mensagem
+        
         alert(data.mensagem || "Usuário ou senha inválidos.");
       }
     } catch (error) {

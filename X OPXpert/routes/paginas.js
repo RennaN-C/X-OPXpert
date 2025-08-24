@@ -4,8 +4,16 @@ const router = express.Router();
 
 const viewsPath = path.join(__dirname, "../views");
 
-// Rota para a página inicio.html
-router.get("/inicio", (req, res) => {
+// Middleware de autenticação que você deve criar (exemplo básico)
+function autenticar(req, res, next) {
+  if (req.session && req.session.usuarioLogado) {
+    next(); // usuário autenticado, pode prosseguir
+  } else {
+    res.redirect("/login"); // não autenticado, redireciona para login
+  }
+}
+
+router.get("/inicio", autenticar, (req, res) => {
   res.sendFile(path.join(viewsPath, "inicio.html"));
 });
 
@@ -19,17 +27,16 @@ router.get("/cadastro", (req, res) => {
   res.sendFile(path.join(viewsPath, "cadastro.html"));
 });
 
-// Rota para a página configuracoes.html
-router.get("/configuracoes", (req, res) => {
+router.get("/configuracoes", autenticar, (req, res) => {
   res.sendFile(path.join(viewsPath, "configuracoes.html"));
 });
 
-// Rota para a página funcoes.html
-router.get("/funcoes", (req, res) => {
+// Aqui adiciona o middleware para proteger a rota
+router.get("/funcoes", autenticar, (req, res) => {
   res.sendFile(path.join(viewsPath, "funcoes.html"));
 });
 
-router.get("/agenda", (req, res) => {
+router.get("/agenda",  (req, res) => {
   res.sendFile(path.join(viewsPath, "agenda.html"));
 });
 

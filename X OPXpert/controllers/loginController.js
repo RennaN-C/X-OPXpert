@@ -12,22 +12,25 @@ exports.login = async (req, res) => {
   }
 
   try {
-    // Busca usuário pelo campo 'usuario' no banco
+    // Buscar usuário no banco
     const user = await Usuarios.findOne({ where: { usuario } });
 
     if (!user) {
       return res.status(401).json({ mensagem: "Usuário não encontrado." });
     }
 
-    // Compara a senha recebida com o hash armazenado
+    // Verificar a senha
     const senhaValida = await bcrypt.compare(senha, user.senha_hash);
 
     if (!senhaValida) {
       return res.status(401).json({ mensagem: "Senha incorreta." });
     }
 
-    // Autenticação OK — aqui você pode gerar token JWT ou criar sessão, se quiser
-
+    // ✅ Armazenar usuário na sessão
+    req.session.usuarioLogado = {
+      id: user.id,
+      usuario: user.usuario
+    };
     return res.json({ mensagem: "Login realizado com sucesso!" });
   } catch (error) {
     console.error("Erro no login:", error);
