@@ -1,11 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const ctrl = require('../controllers/funcionarios');
+const controller = require("../controllers/funcionarios");
 
-router.post('/', ctrl.criar);
-router.get('/', ctrl.listar);
-router.get('/:id', ctrl.obter);
-router.put('/:id', ctrl.atualizar);
-router.delete('/:id', ctrl.deletar);
+// Rotas CRUD
+router.get("/", controller.listar);        // GET todos
+router.get("/:id", controller.obter);      // GET por ID
+router.post("/", controller.criar);        // POST criar
+router.put("/:id", controller.atualizar);  // PUT atualizar
+router.delete("/:id", controller.deletar); // DELETE apagar
 
 module.exports = router;
