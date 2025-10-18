@@ -1,6 +1,7 @@
+// models/relatorios.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('relatorios', {
+  const relatorios = sequelize.define('relatorios', {
     id_relatorio: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -36,15 +37,16 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'relatorios',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "relatorios_pkey",
-        unique: true,
-        fields: [
-          { name: "id_relatorio" },
-        ]
-      },
-    ]
+    timestamps: false
   });
+
+  // ADICIONE ESTA PARTE NO FINAL DO FICHEIRO
+  relatorios.associate = function(models) {
+    relatorios.belongsTo(models.usuarios, {
+      foreignKey: 'criado_por',
+      as: 'criador'
+    });
+  };
+
+  return relatorios;
 };

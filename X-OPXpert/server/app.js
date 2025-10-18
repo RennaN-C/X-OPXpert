@@ -1,4 +1,4 @@
-// server/app.js - Versão Corrigida
+// server/app.js - Versão Final Completa
 
 const express = require("express");
 const session = require("express-session");
@@ -36,7 +36,14 @@ const logoutRoutes = require('./routes/logout');
 const departamentosRoutes = require('./routes/departamentos');
 const manutencoesRoutes = require('./routes/manutencoes');
 const ordensProducaoRoutes = require('./routes/ordens_producao');
-const movimentacoesEstoqueRoutes = require('./routes/movimentacoes_estoque'); // <-- 1. IMPORTAÇÃO ADICIONADA
+const movimentacoesEstoqueRoutes = require('./routes/movimentacoes_estoque');
+const financeiroRoutes = require('./routes/financeiro');
+const relatoriosRoutes = require('./routes/relatorios');
+const clientesRoutes = require('./routes/clientes');
+const fornecedoresRoutes = require('./routes/fornecedores');
+const qualidadeRoutes = require('./routes/qualidade');
+const pedidosCompraRoutes = require('./routes/pedidos_compra'); // <-- 1. ADICIONAR IMPORTAÇÃO
+
 
 // Registro das rotas
 app.use("/api/agenda", agendaRoutes);
@@ -45,8 +52,13 @@ app.use("/api/produtos", produtosRoutes);
 app.use("/api/departamentos", departamentosRoutes);
 app.use("/api/manutencoes", manutencoesRoutes);
 app.use("/api/ordens-producao", ordensProducaoRoutes);
-app.use("/api/movimentacoes-estoque", movimentacoesEstoqueRoutes); // <-- 2. ROTA REGISTADA
-
+app.use("/api/movimentacoes-estoque", movimentacoesEstoqueRoutes);
+app.use("/api/financeiro", financeiroRoutes);
+app.use("/api/relatorios", relatoriosRoutes);
+app.use("/api/clientes", clientesRoutes);
+app.use("/api/fornecedores", fornecedoresRoutes);
+app.use("/api/qualidade", qualidadeRoutes);
+app.use("/api/pedidos-compra", pedidosCompraRoutes); // <-- 2. ADICIONAR ROTA
 // Rotas de autenticação
 app.use("/login", loginRoutes);
 app.use("/cadastro", cadastroRoutes);
@@ -63,7 +75,9 @@ db.sequelize
   .authenticate()
   .then(() => {
     console.log("Conectado ao banco de dados com sucesso!");
-    return db.sequelize.sync(); 
+    // ATENÇÃO: use { alter: true } em desenvolvimento para aplicar as novas tabelas.
+    // Em produção, o ideal é usar migrations.
+    return db.sequelize.sync({ alter: true });
   })
   .then(() => {
     app.listen(PORT, () => {

@@ -1,6 +1,7 @@
+// models/ordens_producao.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('ordens_producao', {
+  const ordens_producao = sequelize.define('ordens_producao', {
     id_ordem: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -59,22 +60,16 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'ordens_producao',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "ordens_producao_codigo_ordem_key",
-        unique: true,
-        fields: [
-          { name: "codigo_ordem" },
-        ]
-      },
-      {
-        name: "ordens_producao_pkey",
-        unique: true,
-        fields: [
-          { name: "id_ordem" },
-        ]
-      },
-    ]
+    timestamps: false
   });
+
+  // ADICIONE ESTA PARTE PARA DEFINIR A RELAÇÃO
+  ordens_producao.associate = function(models) {
+    ordens_producao.belongsTo(models.usuarios, {
+      foreignKey: 'criado_por',
+      as: 'criador'
+    });
+  };
+
+  return ordens_producao;
 };

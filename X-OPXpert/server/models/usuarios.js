@@ -1,6 +1,8 @@
+// models/usuarios.js
 const Sequelize = require('sequelize');
+
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('usuarios', {
+  const usuarios = sequelize.define('usuarios', {
     id_usuario: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -73,43 +75,21 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'usuarios',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "usuarios_cpf_key",
-        unique: true,
-        fields: [
-          { name: "cpf" },
-        ]
-      },
-      {
-        name: "usuarios_email_key",
-        unique: true,
-        fields: [
-          { name: "email" },
-        ]
-      },
-      {
-        name: "usuarios_matricula_key",
-        unique: true,
-        fields: [
-          { name: "matricula" },
-        ]
-      },
-      {
-        name: "usuarios_pkey",
-        unique: true,
-        fields: [
-          { name: "id_usuario" },
-        ]
-      },
-      {
-        name: "usuarios_usuario_key",
-        unique: true,
-        fields: [
-          { name: "usuario" },
-        ]
-      },
-    ]
+    timestamps: false
   });
+
+  // PARTE ATUALIZADA PARA INCLUIR TODAS AS ASSOCIAÇÕES
+  usuarios.associate = function(models) {
+    usuarios.hasMany(models.relatorios, {
+      foreignKey: 'criado_por',
+      as: 'relatorios_criados'
+    });
+    // Adiciona a nova associação com ordens de produção
+    usuarios.hasMany(models.ordens_producao, {
+        foreignKey: 'criado_por',
+        as: 'ordens_criadas'
+    });
+  };
+
+  return usuarios;
 };
