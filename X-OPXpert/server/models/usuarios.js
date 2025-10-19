@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize, DataTypes) {
-  const usuarios = sequelize.define('usuarios', {
+  return sequelize.define('usuarios', {
     id_usuario: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -77,19 +77,4 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false
   });
-
-  // PARTE ATUALIZADA PARA INCLUIR TODAS AS ASSOCIAÇÕES
-  usuarios.associate = function(models) {
-    usuarios.hasMany(models.relatorios, {
-      foreignKey: 'criado_por',
-      as: 'relatorios_criados'
-    });
-    // Adiciona a nova associação com ordens de produção
-    usuarios.hasMany(models.ordens_producao, {
-        foreignKey: 'criado_por',
-        as: 'ordens_criadas'
-    });
-  };
-
-  return usuarios;
 };

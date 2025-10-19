@@ -1,4 +1,4 @@
-// server/controllers/ordens_producao.js - Versão Corrigida
+// server/controllers/ordens_producao.js - Versão Final e Corrigida
 const { ordens_producao, usuarios } = require('../models');
 
 module.exports = {
@@ -13,18 +13,17 @@ module.exports = {
 
   async listar(req, res) {
     try {
-      // SUBSTITUÍDO: Usando o método padrão do Sequelize que é mais seguro
       const todos = await ordens_producao.findAll({
         include: [{
             model: usuarios,
-            as: 'criador',
-            attributes: ['nome_completo'] // Opcional: para pegar o nome de quem criou
+            as: 'criador', // Usa o alias definido em init-models.js
+            attributes: ['nome_completo']
         }]
       });
       res.json(todos);
     } catch (err) {
       console.error("Erro ao listar ordens de produção:", err);
-      res.status(500).json({ erro: "Erro interno do servidor." });
+      res.status(500).json({ erro: "Erro interno do servidor ao buscar ordens." });
     }
   },
 
@@ -34,7 +33,6 @@ module.exports = {
       if (!item) return res.status(404).json({ erro: 'Ordem de produção não encontrada' });
       res.json(item);
     } catch (err) {
-      console.error("Erro ao obter ordem de produção:", err);
       res.status(500).json({ erro: "Erro interno do servidor." });
     }
   },
@@ -43,7 +41,6 @@ module.exports = {
     try {
       const item = await ordens_producao.findByPk(req.params.id);
       if (!item) return res.status(404).json({ erro: 'Ordem de produção não encontrada' });
-      
       await item.update(req.body);
       res.json(item);
     } catch (err) {

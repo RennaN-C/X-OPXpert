@@ -1,7 +1,7 @@
 // models/ordens_producao.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  const ordens_producao = sequelize.define('ordens_producao', {
+  return sequelize.define('ordens_producao', {
     id_ordem: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -62,14 +62,4 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false
   });
-
-  // ADICIONE ESTA PARTE PARA DEFINIR A RELAÇÃO
-  ordens_producao.associate = function(models) {
-    ordens_producao.belongsTo(models.usuarios, {
-      foreignKey: 'criado_por',
-      as: 'criador'
-    });
-  };
-
-  return ordens_producao;
 };

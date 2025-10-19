@@ -1,8 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
-const basename = path.basename(__filename);
-require("dotenv").config();
+// models/index.js - Versão Corrigida e Centralizada
+'use strict';
+
+const Sequelize = require('sequelize');
+const initModels = require('./init-models'); // Importa o inicializador
+require('dotenv').config();
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -11,31 +12,13 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5430,
-    dialect: "postgres",
-    logging: false,
+    dialect: 'postgres',
+    logging: false, // Desativa os logs de SQL no console
   }
 );
 
-const db = {};
-
-fs.readdirSync(__dirname)
-  .filter(
-    (file) =>
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-  )
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes
-    );
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// Usa o initModels para carregar tudo
+const db = initModels(sequelize);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

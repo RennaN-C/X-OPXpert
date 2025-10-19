@@ -43,7 +43,7 @@ const clientesRoutes = require('./routes/clientes');
 const fornecedoresRoutes = require('./routes/fornecedores');
 const qualidadeRoutes = require('./routes/qualidade');
 const pedidosCompraRoutes = require('./routes/pedidos_compra'); // <-- 1. ADICIONAR IMPORTAÇÃO
-
+const authRoutes = require('./routes/auth');
 
 // Registro das rotas
 app.use("/api/agenda", agendaRoutes);
@@ -58,7 +58,8 @@ app.use("/api/relatorios", relatoriosRoutes);
 app.use("/api/clientes", clientesRoutes);
 app.use("/api/fornecedores", fornecedoresRoutes);
 app.use("/api/qualidade", qualidadeRoutes);
-app.use("/api/pedidos-compra", pedidosCompraRoutes); // <-- 2. ADICIONAR ROTA
+app.use("/api/pedidos-compra", pedidosCompraRoutes);
+app.use("/api", authRoutes);
 // Rotas de autenticação
 app.use("/login", loginRoutes);
 app.use("/cadastro", cadastroRoutes);
