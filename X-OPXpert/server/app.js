@@ -78,7 +78,7 @@ db.sequelize
     console.log("Conectado ao banco de dados com sucesso!");
     // ATENÇÃO: use { alter: true } em desenvolvimento para aplicar as novas tabelas.
     // Em produção, o ideal é usar migrations.
-    return db.sequelize.sync({ alter: true });
+   return db.sequelize.sync({ alter: true })
   })
   .then(() => {
     app.listen(PORT, () => {

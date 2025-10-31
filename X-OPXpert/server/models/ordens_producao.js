@@ -55,6 +55,24 @@ module.exports = function(sequelize, DataTypes) {
         model: 'usuarios',
         key: 'id_usuario'
       }
+    },
+    // --- CAMPOS ADICIONADOS ---
+    id_cliente: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'clientes', // Referencia a tabela clientes
+        key: 'id_cliente'
+      }
+    },
+    prioridade: {
+      type: DataTypes.STRING(20), // "Baixa", "Média", "Alta"
+      allowNull: true,
+      defaultValue: 'Média'
+    },
+    ambiente: {
+      type: DataTypes.STRING(100), // "Cozinha", "Sala" (do protótipo)
+      allowNull: true
     }
   }, {
     sequelize,

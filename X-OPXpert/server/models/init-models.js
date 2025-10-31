@@ -49,6 +49,11 @@ function initModels(sequelize) {
   ordens_producao.belongsTo(usuarios, { as: "criador", foreignKey: "criado_por"});
   usuarios.hasMany(ordens_producao, { as: "ordens_criadas", foreignKey: "criado_por"});
   
+  // --- ASSOCIAÇÃO ADICIONADA ---
+  ordens_producao.belongsTo(clientes, { as: "cliente", foreignKey: "id_cliente"});
+  clientes.hasMany(ordens_producao, { as: "ordens_producao", foreignKey: "id_cliente"});
+  // --- FIM DA ASSOCIAÇÃO ADICIONADA ---
+
   relatorios.belongsTo(usuarios, { as: "criador", foreignKey: "criado_por"});
   usuarios.hasMany(relatorios, { as: "relatorios_criados", foreignKey: "criado_por"});
 
