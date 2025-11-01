@@ -51,4 +51,4 @@ exports.login = async (req, res) => {
     console.error("Erro no login:", error);
     return res.status(500).json({ mensagem: "Erro interno do servidor." });
   }
-};
+};  
