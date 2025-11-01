@@ -1,8 +1,7 @@
-// server/controllers/ordens_producao.js - VERSÃO COM APONTAMENTO
 const { ordens_producao, usuarios, clientes } = require('../models');
 const { Op } = require('sequelize');
 
-// --- NOVA FUNÇÃO DE APONTAMENTO (REQ DE ATUALIZAÇÃO AUTOMÁTICA) ---
+
 async function apontar(req, res) {
   try {
     const { id } = req.params;
@@ -21,24 +20,24 @@ async function apontar(req, res) {
       return res.status(400).json({ erro: 'Esta ordem já está finalizada e não pode receber apontamentos.' });
     }
 
-    // --- LÓGICA DE CÁLCULO AUTOMÁTICO ---
+    
     const nova_produzida = (ordem.quantidade_produzida || 0) + parseInt(quantidade_apontada, 10);
     const planejada = ordem.quantidade_planejada || 0;
     
     let novo_progresso = 0;
-    let novo_status = 'Em Execução'; // Muda o status para "Em Execução" no primeiro apontamento
+    let novo_status = 'Em Execução'; 
 
     if (planejada > 0) {
       novo_progresso = Math.round((nova_produzida / planejada) * 100);
     }
 
-    // Se atingiu a meta, conclui a ordem
+   
     if (nova_produzida >= planejada) {
       novo_status = 'Concluída';
       novo_progresso = 100;
     }
     
-    // Atualiza a ordem no banco
+    
     await ordem.update({
       quantidade_produzida: nova_produzida,
       progresso: novo_progresso,

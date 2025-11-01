@@ -1,4 +1,3 @@
-// models/relatorios.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   const relatorios = sequelize.define('relatorios', {
@@ -40,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
-  // ADICIONE ESTA PARTE NO FINAL DO FICHEIRO
+ 
   relatorios.associate = function(models) {
     relatorios.belongsTo(models.usuarios, {
       foreignKey: 'criado_por',

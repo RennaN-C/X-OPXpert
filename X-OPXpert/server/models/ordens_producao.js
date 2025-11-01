@@ -1,4 +1,3 @@
-// models/ordens_producao.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ordens_producao', {
@@ -81,7 +80,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_usuario'
       }
     },
-    // --- CAMPO ADICIONADO PARA PROGRESSO AUTOMÁTICO ---
+    
     progresso: {
       type: DataTypes.INTEGER,
       allowNull: true,

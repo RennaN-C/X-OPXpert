@@ -12,21 +12,19 @@ exports.login = async (req, res) => {
   }
 
   try {
-    // Buscar usuário no banco
+    
     const user = await Usuarios.findOne({ where: { usuario } });
 
     if (!user) {
       return res.status(401).json({ mensagem: "Usuário não encontrado." });
     }
-
-    // Verificar a senha
+  
     const senhaValida = await bcrypt.compare(senha, user.senha_hash);
 
     if (!senhaValida) {
       return res.status(401).json({ mensagem: "Senha incorreta." });
     }
 
-    // ✅ Armazenar usuário na sessão
     req.session.usuarioLogado = {
       id: user.id,
       usuario: user.usuario

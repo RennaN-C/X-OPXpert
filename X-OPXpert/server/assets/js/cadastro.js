@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   btnCadastrar.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    // Pegar valores do formulário
+    
     const nome_completo = document.getElementById("nome").value.trim();
     const email = document.getElementById("email").value.trim();
     const usuario = document.getElementById("usuario").value.trim();
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const senha = document.getElementById("senha").value;
     const confirmaSenha = document.getElementById("confirmaSenha").value;
 
-    // Validação simples
+    
     if (
       !nome_completo ||
       !email ||
@@ -39,8 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Como seu departamento no backend espera um ID, vamos mapear o texto para um número
-    // Ajuste conforme sua tabela departamentos no banco
+ 
     const departamentosMap = {
       TI: 1,
       RH: 2,
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         alert(data.mensagem || "Cadastro realizado com sucesso!");
-        window.location.href = "/login"; // redireciona para login após cadastro
+        window.location.href = "/login"; 
       } else {
         alert(data.mensagem || "Erro ao cadastrar usuário.");
       }

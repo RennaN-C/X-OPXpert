@@ -1,10 +1,8 @@
-// server/controllers/movimentacoes_estoque.js - Versão Completa e Corrigida
-
 const db = require('../models');
 const { movimentacoes_estoque } = require('../models');
 
 module.exports = {
-  // --- Função que usa a nova procedure ---
+  
   async criar(req, res) {
     const { id_produto, quantidade, tipo, observacao } = req.body;
 
@@ -13,7 +11,7 @@ module.exports = {
     }
 
     try {
-      // Chama a função 'registrar_movimentacao_estoque' que criámos no banco de dados
+     
       const [results] = await db.sequelize.query(
         'SELECT public.registrar_movimentacao_estoque(:id_produto, :quantidade, :tipo, :observacao) as nova_quantidade',
         {
@@ -33,12 +31,12 @@ module.exports = {
       });
 
     } catch (err) {
-      // Captura os erros lançados pela procedure (ex: 'Stock insuficiente')
+    
       res.status(400).json({ erro: err.message });
     }
   },
 
-  // --- Funções restantes que estavam em falta ---
+
   async listar(req, res) {
     try {
       const todos = await movimentacoes_estoque.findAll();

@@ -1,4 +1,3 @@
-// models/qualidade.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('qualidade', {
@@ -26,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: Sequelize.NOW
     },
     resultado: {
-      type: DataTypes.STRING(20), // Aprovado, Reprovado
+      type: DataTypes.STRING(20), 
       allowNull: false
     },
     observacoes: {

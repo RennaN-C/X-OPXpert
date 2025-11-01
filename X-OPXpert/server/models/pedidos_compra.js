@@ -1,4 +1,3 @@
-// models/pedidos_compra.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   const pedidos_compra = sequelize.define('pedidos_compra', {
@@ -16,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_fornecedor'
       }
     },
-    // ... outros campos ...
+    
     data_pedido: {
       type: DataTypes.DATEONLY,
       allowNull: false,
@@ -38,11 +37,11 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: true
   });
 
-  // ADICIONAR ESTA PARTE
+  
   pedidos_compra.associate = function(models) {
     pedidos_compra.belongsTo(models.fornecedores, {
       foreignKey: 'id_fornecedor',
-      as: 'fornecedor' // um pedido pertence a um 'fornecedor'
+      as: 'fornecedor' 
     });
   };
 

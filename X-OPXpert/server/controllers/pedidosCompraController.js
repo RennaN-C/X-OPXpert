@@ -1,10 +1,9 @@
-// controllers/pedidosCompraController.js
 const { pedidos_compra, fornecedores } = require('../models');
 
 module.exports = {
   async listar(req, res) {
     try {
-      // Usa o 'as: "fornecedor"' que definimos no modelo
+      
       const todos = await pedidos_compra.findAll({
         include: [{
           model: fornecedores,

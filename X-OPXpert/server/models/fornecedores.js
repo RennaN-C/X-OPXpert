@@ -1,4 +1,3 @@
-// models/fornecedores.js
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   const fornecedores = sequelize.define('fornecedores', {
@@ -12,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(150),
       allowNull: false
     },
-    // ... outros campos ...
+    
     cnpj: {
       type: DataTypes.STRING(18),
       allowNull: true,
@@ -37,11 +36,11 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: true
   });
 
-  // ADICIONAR ESTA PARTE
+ 
   fornecedores.associate = function(models) {
     fornecedores.hasMany(models.pedidos_compra, {
       foreignKey: 'id_fornecedor',
-      as: 'pedidos' // um fornecedor tem muitos 'pedidos'
+      as: 'pedidos' 
     });
   };
 

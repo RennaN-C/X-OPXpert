@@ -1,5 +1,3 @@
-// controllers/cadastroController.js
-
 const bcrypt = require("bcryptjs");
 const db = require("../models");
 const Usuarios = db.usuarios;
@@ -20,13 +18,13 @@ exports.cadastrar = async (req, res) => {
     senha,
   } = req.body;
 
-  // Validação básica
+  
   if (!nome_completo || !email || !usuario || !cpf || !senha) {
     return res.status(400).json({ mensagem: "Campos obrigatórios faltando." });
   }
 
   try {
-    // Verificar se já existe usuário, email, cpf ou matrícula iguais
+    
     const existente = await Usuarios.findOne({
       where: {
         [Op.or]: [{ usuario }, { email }, { cpf }, { matricula }],
@@ -39,10 +37,10 @@ exports.cadastrar = async (req, res) => {
         .json({ mensagem: "Usuário, email, CPF ou matrícula já cadastrado." });
     }
 
-    // Criptografar senha
+    
     const senha_hash = await bcrypt.hash(senha, 10);
 
-    // Criar novo usuário
+    
     const novoUsuario = await Usuarios.create({
       nome_completo,
       email,

@@ -1,8 +1,7 @@
-// models/index.js - Versão Corrigida e Centralizada
 'use strict';
 
 const Sequelize = require('sequelize');
-const initModels = require('./init-models'); // Importa o inicializador
+const initModels = require('./init-models'); 
 require('dotenv').config();
 
 const sequelize = new Sequelize(
@@ -13,11 +12,10 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5430,
     dialect: 'postgres',
-    logging: false, // Desativa os logs de SQL no console
+    logging: false, 
   }
 );
 
-// Usa o initModels para carregar tudo
 const db = initModels(sequelize);
 
 db.sequelize = sequelize;
