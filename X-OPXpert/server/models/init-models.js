@@ -7,38 +7,47 @@ var _produtos = require("./produtos");
 var _manutencoes = require("./manutencoes");
 var _permissoes = require("./permissoes");
 var _financeiro = require("./financeiro");
+
 var _usuarios = require("./usuarios"); 
 var _funcionarios = require("./funcionarios"); 
+var _pedidos_compra = require("./pedidos_compra"); 
 var _movimentacoes_estoque = require("./movimentacoes_estoque"); 
 var _ordens_servico = require("./ordens_servico"); 
+
 var _agenda = require("./agenda"); 
 var _ponto = require("./ponto"); 
 var _relatorios = require("./relatorios"); 
 var _usuario_permissoes = require("./usuario_permissoes"); 
 var _ordens_producao = require("./ordens_producao"); 
+
 var _etapas_producao = require("./etapas_producao"); 
 var _qualidade = require("./qualidade"); 
 
+
 function initModels(sequelize) {
   var clientes = _clientes(sequelize, DataTypes);
-  var departamentos = _departamentos(sequelize, DataTypes); 
+  var departamentos = _departamentos(sequelize, DataTypes);
+  var fornecedores = _fornecedores(sequelize, DataTypes);
   var produtos = _produtos(sequelize, DataTypes);
   var manutencoes = _manutencoes(sequelize, DataTypes);
   var permissoes = _permissoes(sequelize, DataTypes);
   var financeiro = _financeiro(sequelize, DataTypes);
+
   var usuarios = _usuarios(sequelize, DataTypes);
   var funcionarios = _funcionarios(sequelize, DataTypes);
-  var pedidos_compra = _pedidos_compra(sequelize, DataTypes);
+  var pedidos_compra = _pedidos_compra(sequelize, DataTypes); 
   var movimentacoes_estoque = _movimentacoes_estoque(sequelize, DataTypes);
   var ordens_servico = _ordens_servico(sequelize, DataTypes);
+
   var agenda = _agenda(sequelize, DataTypes);
   var ponto = _ponto(sequelize, DataTypes);
   var relatorios = _relatorios(sequelize, DataTypes);
   var usuario_permissoes = _usuario_permissoes(sequelize, DataTypes);
   var ordens_producao = _ordens_producao(sequelize, DataTypes);
+  
   var etapas_producao = _etapas_producao(sequelize, DataTypes);
   var qualidade = _qualidade(sequelize, DataTypes);
-
+  
   usuarios.belongsTo(departamentos, { as: "departamento_usuario", foreignKey: "departamento_id"}); 
   departamentos.hasMany(usuarios, { as: "usuarios_departamento", foreignKey: "departamento_id"});
 

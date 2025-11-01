@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('../controllers/relatorios');
 
+router.get('/producao', ctrl.gerarRelatorioProducao);
+
 router.post('/', ctrl.criar);
 router.get('/', ctrl.listar);
 router.get('/:id', ctrl.obter);
