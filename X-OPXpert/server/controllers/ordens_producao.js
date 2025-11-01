@@ -1,60 +1,95 @@
-// server/controllers/ordens_producao.js - VERSÃO COM CÓDIGO AUTOMÁTICO E CORREÇÃO
+// server/controllers/ordens_producao.js - VERSÃO COM APONTAMENTO
 const { ordens_producao, usuarios, clientes } = require('../models');
 const { Op } = require('sequelize');
 
+// --- NOVA FUNÇÃO DE APONTAMENTO (REQ DE ATUALIZAÇÃO AUTOMÁTICA) ---
+async function apontar(req, res) {
+  try {
+    const { id } = req.params;
+    const { quantidade_apontada } = req.body;
+
+    if (!quantidade_apontada || isNaN(quantidade_apontada) || quantidade_apontada <= 0) {
+      return res.status(400).json({ erro: 'Quantidade apontada inválida.' });
+    }
+
+    const ordem = await ordens_producao.findByPk(id);
+    if (!ordem) {
+      return res.status(404).json({ erro: 'Ordem de produção não encontrada.' });
+    }
+
+    if (ordem.status === 'Concluída' || ordem.status === 'Cancelada') {
+      return res.status(400).json({ erro: 'Esta ordem já está finalizada e não pode receber apontamentos.' });
+    }
+
+    // --- LÓGICA DE CÁLCULO AUTOMÁTICO ---
+    const nova_produzida = (ordem.quantidade_produzida || 0) + parseInt(quantidade_apontada, 10);
+    const planejada = ordem.quantidade_planejada || 0;
+    
+    let novo_progresso = 0;
+    let novo_status = 'Em Execução'; // Muda o status para "Em Execução" no primeiro apontamento
+
+    if (planejada > 0) {
+      novo_progresso = Math.round((nova_produzida / planejada) * 100);
+    }
+
+    // Se atingiu a meta, conclui a ordem
+    if (nova_produzida >= planejada) {
+      novo_status = 'Concluída';
+      novo_progresso = 100;
+    }
+    
+    // Atualiza a ordem no banco
+    await ordem.update({
+      quantidade_produzida: nova_produzida,
+      progresso: novo_progresso,
+      status: novo_status
+    });
+
+    return res.json(ordem); // Retorna a ordem atualizada
+
+  } catch (err) {
+    console.error("Erro no apontamento:", err);
+    res.status(500).json({ erro: 'Erro interno no servidor ao fazer apontamento.' });
+  }
+}
+// --- FIM DA NOVA FUNÇÃO ---
+
+
 module.exports = {
+  // Exporta a nova função
+  apontar,
+
   async criar(req, res) {
     try {
-      // --- LÓGICA DE GERAÇÃO DE CÓDIGO ---
       const ano = new Date().getFullYear();
       const prefixo = `OP-${ano}-`;
-
       const ultimaOrdem = await ordens_producao.findOne({
-        where: {
-          codigo_ordem: {
-            [Op.like]: `${prefixo}%` 
-          }
-        },
+        where: { codigo_ordem: { [Op.like]: `${prefixo}%` } },
         order: [['codigo_ordem', 'DESC']]
       });
-
       let novoNumero = 1;
       if (ultimaOrdem) {
-        const numeroStr = ultimaOrdem.codigo_ordem.split('-').pop();
-        novoNumero = parseInt(numeroStr, 10) + 1;
+        novoNumero = parseInt(ultimaOrdem.codigo_ordem.split('-').pop(), 10) + 1;
       }
-
       const novoCodigo = prefixo + novoNumero.toString().padStart(4, '0');
-      // --- FIM DA LÓGICA ---
 
-
-      // --- *** A CORREÇÃO ESTÁ AQUI *** ---
-      
-      // 1. Prepara os dados para criação
       const dadosParaCriar = {
-        ...req.body, // Pega todos os campos do frontend
-        codigo_ordem: novoCodigo, // Define o código gerado
-        
-        // 2. CONVERTE STRING VAZIA EM NULL:
-        // Se req.body.id_cliente for "" (ou qualquer valor 'falsy' como 0), 
-        // define-o como 'null', que é o valor correto para o banco de dados.
-        id_cliente: req.body.id_cliente || null
+        ...req.body,
+        codigo_ordem: novoCodigo,
+        id_cliente: req.body.id_cliente || null,
+        id_responsavel: req.body.id_responsavel || null,
+        progresso: 0, // Garante que o progresso comece em 0
+        status: 'Aberta' // Garante que o status inicial seja "Aberta"
       };
 
-      // 3. Cria a ordem com os dados JÁ TRATADOS
       const novo = await ordens_producao.create(dadosParaCriar);
-      
       res.status(201).json(novo);
 
     } catch (err) {
-      // Adiciona um log no console do servidor para debugging
       console.error("Erro detalhado ao criar ordem de produção:", err); 
-
       if (err.name === 'SequelizeUniqueConstraintError') {
          return res.status(409).json({ erro: 'Falha ao gerar código de ordem. Tente novamente.' });
       }
-      
-      // Retorna a mensagem de erro específica, se houver
       res.status(400).json({ erro: err.message || "Erro desconhecido no servidor." });
     }
   },
@@ -62,16 +97,12 @@ module.exports = {
   async listar(req, res) {
     try {
       const todos = await ordens_producao.findAll({
-        include: [{ 
-            model: usuarios,
-            as: 'criador',
-            attributes: ['nome_completo']
-        },
-        { 
-            model: clientes,
-            as: 'cliente',
-            attributes: ['nome_razao_social']
-        }]
+        include: [
+          { model: usuarios, as: 'criador', attributes: ['nome_completo'] },
+          { model: clientes, as: 'cliente', attributes: ['nome_razao_social'] },
+          { model: usuarios, as: 'responsavel', attributes: ['nome_completo'] }
+        ],
+        order: [['data_inicio', 'DESC']] // Ordena por mais recente
       });
       res.json(todos);
     } catch (err) {
@@ -85,7 +116,8 @@ module.exports = {
       const item = await ordens_producao.findByPk(req.params.id, {
          include: [
             { model: usuarios, as: 'criador', attributes: ['nome_completo'] },
-            { model: clientes, as: 'cliente', attributes: ['nome_razao_social'] }
+            { model: clientes, as: 'cliente', attributes: ['nome_razao_social'] },
+            { model: usuarios, as: 'responsavel', attributes: ['nome_completo'] }
          ]
       });
       if (!item) return res.status(404).json({ erro: 'Ordem de produção não encontrada' });
@@ -100,13 +132,15 @@ module.exports = {
       const item = await ordens_producao.findByPk(req.params.id);
       if (!item) return res.status(404).json({ erro: 'Ordem de produção não encontrada' });
       
-      // Remove o codigo_ordem do body para evitar que seja alterado
       delete req.body.codigo_ordem; 
       
-      // Trata o id_cliente caso venha vazio na atualização
-      if (req.body.id_cliente === "") {
-        req.body.id_cliente = null;
-      }
+      // Não deixa o usuário editar esses campos manualmente
+      delete req.body.quantidade_produzida;
+      delete req.body.progresso;
+      // O status (Cancelada) pode ser editado
+      
+      if (req.body.id_cliente === "") req.body.id_cliente = null;
+      if (req.body.id_responsavel === "") req.body.id_responsavel = null;
 
       await item.update(req.body);
       res.json(item);

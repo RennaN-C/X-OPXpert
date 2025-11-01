@@ -56,23 +56,36 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id_usuario'
       }
     },
-    // --- CAMPOS ADICIONADOS ---
     id_cliente: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'clientes', // Referencia a tabela clientes
+        model: 'clientes',
         key: 'id_cliente'
       }
     },
     prioridade: {
-      type: DataTypes.STRING(20), // "Baixa", "Média", "Alta"
+      type: DataTypes.STRING(20),
       allowNull: true,
       defaultValue: 'Média'
     },
     ambiente: {
-      type: DataTypes.STRING(100), // "Cozinha", "Sala" (do protótipo)
+      type: DataTypes.STRING(100),
       allowNull: true
+    },
+    id_responsavel: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'usuarios',
+        key: 'id_usuario'
+      }
+    },
+    // --- CAMPO ADICIONADO PARA PROGRESSO AUTOMÁTICO ---
+    progresso: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     sequelize,

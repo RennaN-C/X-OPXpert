@@ -1,4 +1,4 @@
-// server/app.js - Versão Final Completa
+// server/app.js - ATUALIZADO (com Seeding)
 
 const express = require("express");
 const session = require("express-session");
@@ -42,8 +42,9 @@ const relatoriosRoutes = require('./routes/relatorios');
 const clientesRoutes = require('./routes/clientes');
 const fornecedoresRoutes = require('./routes/fornecedores');
 const qualidadeRoutes = require('./routes/qualidade');
-const pedidosCompraRoutes = require('./routes/pedidos_compra'); // <-- 1. ADICIONAR IMPORTAÇÃO
+const pedidosCompraRoutes = require('./routes/pedidos_compra');
 const authRoutes = require('./routes/auth');
+const usuariosRoutes = require('./routes/usuarios'); // Certifique-se que esta rota está importada
 
 // Registro das rotas
 app.use("/api/agenda", agendaRoutes);
@@ -59,11 +60,30 @@ app.use("/api/clientes", clientesRoutes);
 app.use("/api/fornecedores", fornecedoresRoutes);
 app.use("/api/qualidade", qualidadeRoutes);
 app.use("/api/pedidos-compra", pedidosCompraRoutes);
+app.use("/api/usuarios", usuariosRoutes); // E registrada
 app.use("/api", authRoutes);
 // Rotas de autenticação
 app.use("/login", loginRoutes);
 app.use("/cadastro", cadastroRoutes);
 app.use('/logout', logoutRoutes);
+
+// --- FUNÇÃO DE SEEDING (POPULAR DADOS) ---
+async function seedDatabase() {
+  const { departamentos } = db;
+  try {
+    // findOrCreate: Cria se não existir. Não faz nada se já existir.
+    // Isto garante que os IDs sejam 1, 2, 3, 4, 5 na primeira execução.
+    await departamentos.findOrCreate({ where: { nome: 'TI' }, defaults: { nome: 'TI' } });
+    await departamentos.findOrCreate({ where: { nome: 'RH' }, defaults: { nome: 'RH' } });
+    await departamentos.findOrCreate({ where: { nome: 'Financeiro' }, defaults: { nome: 'Financeiro' } });
+    await departamentos.findOrCreate({ where: { nome: 'Vendas' }, defaults: { nome: 'Vendas' } });
+    await departamentos.findOrCreate({ where: { nome: 'Marketing' }, defaults: { nome: 'Marketing' } });
+    
+    console.log("Departamentos padrão verificados/criados com sucesso.");
+  } catch (error) {
+    console.error("Erro ao popular departamentos:", error);
+  }
+}
 
 // --- Tratamento de Erros e Inicialização ---
 app.use((req, res, next) => {
@@ -76,9 +96,12 @@ db.sequelize
   .authenticate()
   .then(() => {
     console.log("Conectado ao banco de dados com sucesso!");
-    // ATENÇÃO: use { alter: true } em desenvolvimento para aplicar as novas tabelas.
-    // Em produção, o ideal é usar migrations.
-   return db.sequelize.sync({ alter: true })
+    // GARANTA QUE ESTÁ DE VOLTA PARA 'alter: true'
+    return db.sequelize.sync({ alter: true });
+  })
+  .then(() => {
+    // CHAMA A FUNÇÃO DE SEEDING DEPOIS DO SYNC
+    return seedDatabase(); 
   })
   .then(() => {
     app.listen(PORT, () => {
