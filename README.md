@@ -1,7 +1,5 @@
 # X-OPXpert (Backend) 🚀
 
-[![X OPXpert Logo](https://raw.githubusercontent.com/RennaN-C/X-OPXpert/main/X-OPXpert/assets/img/logo.png)](https://raw.githubusercontent.com/RennaN-C/X-OPXpert/main/X-OPXpert/assets/img/logo.png)
-
 [![Status Em Desenvolvimento](https://img.shields.io/badge/STATUS-EM%20DESENVOLVIMENTO-green)](https://github.com/RennaN-C/X-OPXpert)
 [![GitHub language count](https://img.shields.io/github/languages/count/RennaN-C/X-OPXpert?color=%2304D361)](https://github.com/RennaN-C/X-OPXpert)
 [![Repository size](https://img.shields.io/github/repo-size/RennaN-C/X-OPXpert)](https://github.com/RennaN-C/X-OPXpert)
