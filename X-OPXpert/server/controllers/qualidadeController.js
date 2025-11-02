@@ -2,7 +2,7 @@ const { qualidade } = require('../models');
 
 module.exports = {
   async listar(req, res) {
-    const todos = await qualidade.findAll({ include: 'ordens_producao' });
+    const todos = await qualidade.findAll({ include: 'ordem_inspecionada' }); 
     res.json(todos);
   },
   async criar(req, res) {
